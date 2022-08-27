@@ -1,9 +1,9 @@
-package projects.exception;
+package recipes.exception;
 
+@SuppressWarnings("serial")
 public class DbException extends RuntimeException {
 
 	public DbException() {
-
 	}
 
 	public DbException(String message) {

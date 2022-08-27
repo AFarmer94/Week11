@@ -9,7 +9,7 @@ CREATE TABLE project(
 	project_name VARCHAR(128) NOT NULL,
 	estimated_hours TIME,
 	actual_hours TIME,
-	difficult VARCHAR(32) NOT NULL,
+	difficulty VARCHAR(32) NOT NULL,
 	notes TEXT,
 	PRIMARY KEY (project_id)
 );
@@ -46,10 +46,3 @@ CREATE TABLE project_category(
 	FOREIGN KEY (category_id) REFERENCES category (category_id) ON DELETE CASCADE,
 	UNIQUE KEY (project_id, category_id)
 );
-
-
-
-
-
-
-
