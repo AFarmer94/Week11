@@ -14,14 +14,10 @@ CREATE TABLE project(
 	PRIMARY KEY (project_id)
 );
 
-CREATE TABLE material(
-	material_id INT AUTO_INCREMENT NOT NULL,
-	project_id INT NOT NULL,
-	material_name VARCHAR(64) NOT NULL,
-	num_required INT NOT NULL,
-	cost INT NOT NULL,
-	PRIMARY KEY (material_id),
-	FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE CASCADE
+CREATE TABLE category(
+	category_id INT AUTO_INCREMENT NOT NULL,
+	category_name VARCHAR(64) NOT NULL,
+	PRIMARY KEY (category_id)
 );
 
 CREATE TABLE step(
@@ -33,10 +29,14 @@ CREATE TABLE step(
 	FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE CASCADE
 );
 
-CREATE TABLE category(
-	category_id INT AUTO_INCREMENT NOT NULL,
-	category_name VARCHAR(64) NOT NULL,
-	PRIMARY KEY (category_id)
+CREATE TABLE material(
+	material_id INT AUTO_INCREMENT NOT NULL,
+	project_id INT NOT NULL,
+	material_name VARCHAR(64) NOT NULL,
+	num_required INT NOT NULL,
+	cost INT NOT NULL,
+	PRIMARY KEY (material_id),
+	FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE CASCADE
 );
 
 CREATE TABLE project_category(

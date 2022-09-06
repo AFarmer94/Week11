@@ -5,9 +5,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import recipes.dao.RecipeDao;
+import recipes.entity.Ingredient;
 import recipes.entity.Recipe;
+import recipes.entity.Step;
+import recipes.entity.Unit;
 import recipes.exception.DbException;
 
 public class RecipeService {
@@ -15,6 +19,11 @@ public class RecipeService {
 	private static final String DATA_FILE = "recipe_data.sql";
 
 	private RecipeDao recipeDao = new RecipeDao();
+
+	public Recipe fetchRecipeById(Integer recipeId) {
+		return recipeDao.fetchRecipeById(recipeId)
+				.orElseThrow(() -> new NoSuchElementException("Recipe with ID=" + recipeId + " does not exist."));
+	}
 
 	public void createAndPopulateTables() {
 		loadFromFile(SCHEMA_FILE);
@@ -25,7 +34,7 @@ public class RecipeService {
 		String content = readFileContent(fileName);
 		List<String> sqlStatements = convertContentToSqlStatments(content);
 
-		// sqlStatements.forEach(line -> System.out.println(line));
+		//sqlStatements.forEach(line -> System.out.println(line));
 
 		recipeDao.executeBatch(sqlStatements);
 	}
@@ -91,6 +100,22 @@ public class RecipeService {
 
 	public Recipe addRecipe(Recipe recipe) {
 		return recipeDao.insertRecipe(recipe);
+	}
+
+	public List<Recipe> fetchRecipes() {
+		return recipeDao.fetchAllRecipes();
+	}
+
+	public List<Unit> fetchUnits() {
+		return recipeDao.fetchAllUnits();
+	}
+
+	public void addIngredient(Ingredient ingredient) {
+		recipeDao.addIngredientToRecipe(ingredient);
+	}
+
+	public void addStep(Step step) {
+		recipeDao.addStepToRecipe(step);
 	}
 
 }
