@@ -77,6 +77,16 @@ public class ProjectDao extends DaoBase {
 					while (rs.next()) {
 						projects.add(extract(rs, Project.class));
 					}
+					
+//					Project project = new Project();
+//					project.setActualHours(rs.getBigDecimal("actual_hours"));
+//					project.setDifficulty(rs.getObject("difficulty", Integer.class));
+//					project.setEstimatedHours(rs.getBigDecimal("estimated_hours"));
+//					project.setNotes(rs.getString("notes"));
+//					project.setProjectName(rs.getString("project_name"));
+//					
+//					projects.add(project);
+					
 					return projects;
 				}
 			} catch (Exception e) {
@@ -125,7 +135,7 @@ public class ProjectDao extends DaoBase {
 	}
 
 	private List<Category> fetchCategoriesForProject(Connection conn, Integer projectId) throws SQLException {
-		String sql = "SELECT c.* FROM " + CATEGORY_TABLE + " c " + "JOIN " + PROJECT_CATEGORY_TABLE + " pc USING (category_id) " + "WHERE project_id=?";
+		String sql = "SELECT c.* FROM " + CATEGORY_TABLE + " c " + "JOIN " + PROJECT_CATEGORY_TABLE + " pc USING (category_id) " + "WHERE project_id = ?";
 		
 		try(PreparedStatement stmt = conn.prepareStatement(sql)){
 			setParameter(stmt, 1, projectId, Integer.class);
